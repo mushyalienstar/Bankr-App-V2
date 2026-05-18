@@ -6,6 +6,8 @@
 
 /////////////////////////////////////////////////
 // Data
+let ownerInsert = prompt('Please enter your name (first, last):');
+let passwordInsert = Number(prompt('Please enter a password (4-digits): '));
 
 // DIFFERENT DATA! Contains movement dates, currency and locale
 
@@ -30,10 +32,10 @@ const account1 = {
 };
 
 const account2 = {
-  owner: 'Arnold Smith',
+  owner: ownerInsert,
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
-  pin: 2222,
+  pin: passwordInsert,
 
   movementsDates: [
     '2019-11-01T13:15:33.035Z',
@@ -183,11 +185,13 @@ const updateUI = function (acc) {
 let currentAccount;
 
 // FAKE ALWAYS LOGGED IN
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
-// day/month/year
+// Experimenting with the API
+const now = new Date();
+labelDate.textContent = new Intl.DateTimeFormat('en-US').format(now);
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -487,7 +491,6 @@ console.log(Date.now());
 
 future.setFullYear(2040);
 console.log(future);
-*/
 
 const future = new Date(2037, 10, 19, 15, 23);
 console.log(+future);
@@ -497,3 +500,4 @@ const calcDaysPassed = (date1, date2) =>
 
 const days1 = calcDaysPassed(new Date(2037, 3, 4), new Date(2037, 3, 14));
 console.log(days1);
+*/
