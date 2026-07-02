@@ -5,8 +5,8 @@ As this was created specifically to learn JavaScript, it is generally quite simp
 
 After the user has made a username and password, they have to log in with the initials of their username (full name) in lowercase (e.g, Arnav Govil -> ag) and their password.
 
-The transactions and balance are also defaulted at the start as a template, but can be added to using the app's features.
+The transactions and balance are also preset at the start as a template, but can be added to using the app's features.
 
-You can also interact with one other premade account (Username: "John Doe", Password: "1111") by transferring money from your own account or by logging in as that user.
+You can also interact with two other premade accounts (Username: "John Doe", Password: "1111" - Canadian Account) & (Username: "Sarah Doe", Password: "2222" - Japanese Account) by transferring money from your own account or by logging in as that user.
 
 Credit to Jonas Schmedtmann for the tutorial on this app.
