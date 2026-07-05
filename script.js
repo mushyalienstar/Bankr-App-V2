@@ -6,8 +6,8 @@
 
 /////////////////////////////////////////////////
 // Data
-// let ownerInsert = prompt('Please enter your name (first, last):');
-// let passwordInsert = Number(prompt('Please enter a password (4-digits): '));
+let ownerInsert = prompt('Please enter your name (first, last):');
+let passwordInsert = Number(prompt('Please enter a password (4-digits): '));
 
 // DIFFERENT DATA! Contains movement dates, currency and locale
 
@@ -31,7 +31,6 @@ const account1 = {
   locale: 'en-CA',
 };
 
-/* 
 const account2 = {
   owner: ownerInsert,
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
@@ -50,7 +49,7 @@ const account2 = {
   ],
   currency: 'USD',
   locale: 'en-US',
-}; */
+};
 
 const account3 = {
   owner: 'Sarah Doe',
@@ -72,7 +71,7 @@ const account3 = {
   locale: 'ja-JP',
 };
 
-const accounts = [account1, /* account2, */ account3];
+const accounts = [account1, account2, account3];
 
 /////////////////////////////////////////////////
 // Elements
