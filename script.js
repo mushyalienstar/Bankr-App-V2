@@ -6,8 +6,8 @@
 
 /////////////////////////////////////////////////
 // Data
-let ownerInsert = prompt('Please enter your name (first, last):');
-let passwordInsert = Number(prompt('Please enter a password (4-digits): '));
+// let ownerInsert = prompt('Please enter your name (first, last):');
+// let passwordInsert = Number(prompt('Please enter a password (4-digits): '));
 
 // DIFFERENT DATA! Contains movement dates, currency and locale
 
@@ -31,11 +31,12 @@ const account1 = {
   locale: 'en-CA',
 };
 
+/*
 const account2 = {
-  owner: ownerInsert,
+  // owner: ownerInsert,
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
-  pin: passwordInsert,
+  // pin: passwordInsert,
 
   movementsDates: [
     '2019-11-01T13:15:33.035Z',
@@ -50,6 +51,7 @@ const account2 = {
   currency: 'USD',
   locale: 'en-US',
 };
+*/
 
 const account3 = {
   owner: 'Sarah Doe',
@@ -71,7 +73,35 @@ const account3 = {
   locale: 'ja-JP',
 };
 
-const accounts = [account1, account2, account3];
+const accounts = [account1, account3];
+
+const logInUser = function (acc) {
+  currentAccount = acc;
+
+  labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+  containerApp.style.opacity = 100;
+
+  const now = new Date();
+  const options = {
+    hour: 'numeric',
+    minute: 'numeric',
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+  };
+
+  labelDate.textContent = new Intl.DateTimeFormat(
+    currentAccount.locale,
+    options,
+  ).format(now);
+
+  inputLoginUsername.value = inputLoginPin.value = '';
+
+  if (timer) clearInterval(timer);
+  timer = startLogOutTimer();
+
+  updateUI(currentAccount);
+};
 
 /////////////////////////////////////////////////
 // Elements
@@ -99,6 +129,23 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
+
+const btnDemoJohn = document.querySelector('#demo-john');
+const btnDemoSarah = document.querySelector('#demo-sarah');
+
+const showSignupLink = document.querySelector('#show-signup');
+const showLoginLink = document.querySelector('#show-login');
+
+const formLogin = document.querySelector('.login');
+const formSignup = document.querySelector('.signup');
+const loginToggleText = document.querySelector('.toggle-text');
+const signupToggleText = document.querySelector('.signup-toggle-text');
+
+const inputSignupName = document.querySelector('.signup__input--name');
+const inputSignupPin = document.querySelector('.signup__input--pin');
+
+const formSignupEl = document.querySelector('.signup');
+const labelLoginError = document.querySelector('.login__error');
 
 /////////////////////////////////////////////////
 // Functions
@@ -189,11 +236,11 @@ const calcDisplaySummary = function (acc) {
 
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
-    acc.username = acc.owner
-      .toLowerCase()
-      .split(' ')
-      .map(name => name[0])
-      .join('');
+    acc.username = acc.owner;
+    // .toLowerCase()
+    // .split(' ')
+    // .map(name => name[0])
+    // .join('');
   });
 };
 createUsernames(accounts);
@@ -248,57 +295,99 @@ let currentAccount, timer;
 // containerApp.style.opacity = 100;
 
 btnLogin.addEventListener('click', function (e) {
-  // Prevent form from submitting
   e.preventDefault();
 
-  currentAccount = accounts.find(
+  const foundAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value,
   );
-  console.log(currentAccount);
 
-  if (currentAccount?.pin === +inputLoginPin.value) {
-    // Display UI and message
-    labelWelcome.textContent = `Welcome back, ${
-      currentAccount.owner.split(' ')[0]
-    }`;
-    containerApp.style.opacity = 100;
-
-    // Create current date and time
-    const now = new Date();
-    const options = {
-      hour: 'numeric',
-      minute: 'numeric',
-      day: 'numeric',
-      month: 'numeric',
-      year: 'numeric',
-      // weekday: 'long',
-    };
-    // const locale = navigator.language;
-    // console.log(locale);
-
-    labelDate.textContent = new Intl.DateTimeFormat(
-      currentAccount.locale,
-      options,
-    ).format(now);
-
-    // const day = `${now.getDate()}`.padStart(2, 0);
-    // const month = `${now.getMonth() + 1}`.padStart(2, 0);
-    // const year = now.getFullYear();
-    // const hour = `${now.getHours()}`.padStart(2, 0);
-    // const min = `${now.getMinutes()}`.padStart(2, 0);
-    // labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
-
-    // Clear input fields
-    inputLoginUsername.value = inputLoginPin.value = '';
-    inputLoginPin.blur();
-
-    // Timer
-    if (timer) clearInterval(timer);
-    timer = startLogOutTimer();
-
-    // Update UI
-    updateUI(currentAccount);
+  // Case 1: no account with that username exists
+  if (!foundAccount) {
+    labelLoginError.textContent = "You haven't created an account yet.";
+    labelLoginError.style.display = '';
+    return;
   }
+
+  // Case 2: account exists, but pin is wrong
+  if (foundAccount.pin !== +inputLoginPin.value) {
+    labelLoginError.textContent = 'Incorrect username or password.';
+    labelLoginError.style.display = '';
+    return;
+  }
+
+  // Success - hide any old error and log in
+  labelLoginError.style.display = 'none';
+  logInUser(foundAccount);
+});
+
+// Demo buttons
+btnDemoJohn.addEventListener('click', function (e) {
+  e.preventDefault();
+  logInUser(account1);
+});
+
+btnDemoSarah.addEventListener('click', function (e) {
+  e.preventDefault();
+  logInUser(account3);
+});
+
+// Toggle links
+showSignupLink.addEventListener('click', function (e) {
+  e.preventDefault();
+  formLogin.style.display = 'none';
+  loginToggleText.style.display = 'none';
+  formSignup.style.display = '';
+  signupToggleText.style.display = '';
+});
+
+showLoginLink.addEventListener('click', function (e) {
+  e.preventDefault();
+  formSignup.style.display = 'none';
+  signupToggleText.style.display = 'none';
+  formLogin.style.display = '';
+  loginToggleText.style.display = '';
+});
+
+// Signup handler
+formSignupEl.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const name = inputSignupName.value.trim();
+  const pin = Number(inputSignupPin.value);
+
+  if (!name || !pin) return;
+
+  const newAccount = {
+    owner: name,
+    movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+    interestRate: 1.5,
+    pin: pin,
+    movementsDates: [
+      '2019-11-01T13:15:33.035Z',
+      '2019-11-30T09:48:16.867Z',
+      '2019-12-25T06:04:23.907Z',
+      '2020-01-25T14:18:46.235Z',
+      '2020-02-05T16:33:06.386Z',
+      '2020-04-10T14:43:26.374Z',
+      '2020-06-25T18:49:59.371Z',
+      '2026-05-17T12:01:20.894Z',
+    ],
+    currency: 'CAD',
+    locale: 'en-CA',
+  };
+
+  accounts.push(newAccount);
+  createUsernames(accounts);
+
+  inputSignupName.value = inputSignupPin.value = '';
+
+  // Switch back to login view visuals, then log straight in
+  formSignup.style.display = 'none';
+  signupToggleText.style.display = 'none';
+  formLogin.style.display = '';
+  loginToggleText.style.display = '';
+
+  // logInUser(newAccount);
 });
 
 btnTransfer.addEventListener('click', function (e) {

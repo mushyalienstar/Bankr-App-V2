@@ -19,21 +19,45 @@
     <nav>
       <p class="welcome">Log in to get started</p>
       <img src="logo.png" alt="Logo" class="logo" />
+      <div class="demo-buttons">
+        <button class="btn--demo" id="demo-john">Log in as John</button>
+        <button class="btn--demo" id="demo-sarah">Log in as Sarah</button>
+      </div>
+      <p class="login__error" style="display: none; color: red"></p>
       <form class="login">
         <input
           type="text"
           placeholder="user"
           class="login__input login__input--user"
         />
-        <!-- In practice, use type="password" -->
         <input
           type="text"
           placeholder="PIN"
-          maxlength="4"
+          maxlength="6"
           class="login__input login__input--pin"
         />
-        <button class="login__btn">&rarr;</button>
+        <button class="login__btn" type="submit">&rarr;</button>
       </form>
+      <p class="toggle-text">
+        New here? <a href="#" id="show-signup">Create an account</a>
+      </p>
+      <form class="signup" style="display: none">
+        <input
+          type="text"
+          placeholder="Name"
+          class="signup__input signup__input--name"
+        />
+        <input
+          type="password"
+          placeholder="Choose a 4-digit PIN"
+          maxlength="4"
+          class="signup__input signup__input--pin"
+        />
+        <button class="signup__btn" type="submit">Sign Up</button>
+      </form>
+      <p class="toggle-text signup-toggle-text" style="display: none">
+        Already have an account? <a href="#" id="show-login">Back to login</a>
+      </p>
     </nav>
 
     <main class="app">
