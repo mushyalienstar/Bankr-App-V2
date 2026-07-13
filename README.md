@@ -7,6 +7,6 @@ After the user has signed in and made a username and password, they have to log 
 
 The transactions and balance are also preset at the start as a template, but can be added to using the app's features.
 
-You can also interact with two other premade accounts (Username: "John Doe"- Canadian Account) & (Username: "Sarah Doe" - Japanese Account), by transferring money from your own account or logging in as that user by pressing the buttons in the top left corner.
+You can also interact with two other premade accounts (Username: "John Doe" - Canadian Account) & (Username: "Sarah Doe" - Japanese Account) by transferring money from your own account or by logging in as that user by pressing the buttons in the top-left corner.
 
 Credit to Jonas Schmedtmann for the tutorial on this app.
